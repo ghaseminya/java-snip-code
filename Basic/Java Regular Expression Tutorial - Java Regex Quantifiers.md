@@ -496,3 +496,73 @@ public class Main {
 The code above generates the following result.
 
 ![](http://www.java2s.com/Tutorials/JavaImage/myResult/E/EXAMPLE__FBD771E58912055F17C4.PNG)
+
+
+We can find a pattern and replace it with some text and the replaced text is depending on the matched text.
+
+In Java we can use the following two methods in the Matcher class to accomplish this task.
+
+<pre>Matcher appendReplacement(StringBuffer sb, String replacement)
+StringBuffer appendTail(StringBuffer sb)
+</pre>
+
+## Example
+
+Suppose we have the following text.
+
+<pre>We have 7 tutorials for Java, 2 tutorials for Javascript and 1 tutorial for Oracle.
+</pre>
+
+We would like to change the number to text in the following rules.
+
+*   if more then 5, replace with many
+*   if less then 5, replace with a few
+*   if it is 1, replace with "only one"
+
+After replacing, the above sentence would be
+
+<pre>We have many tutorials for Java, a few tutorials for Javascript and only one tutorial for Oracle.
+</pre>
+
+To find all numbers, we can use `\b\d+\b`. `\b` marks the word boundaries.
+
+The following code shows how to use Regular Expressions and appendReplacement() and appendTail() Methods
+
+<pre>import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+/* ww  w .ja  v a  2 s.c  o m*/
+public class Main {
+  public static void main(String[] args) {
+    String regex = "\\b\\d+\\b";
+    StringBuffer sb = new StringBuffer();
+    String replacementText = "";
+    String matchedText = "";
+
+    String text = "We have 7 tutorials for Java, 2 tutorials for Javascript and 1 tutorial for Oracle.";
+
+    Pattern p = Pattern.compile(regex);
+    Matcher m = p.matcher(text);
+
+    while (m.find()) {
+      matchedText = m.group();
+      int num = Integer.parseInt(matchedText);
+      if (num == 1) {
+        replacementText = "only one";
+      } else if (num < 5) {
+        replacementText = "a few";
+      } else {
+        replacementText = "many";
+      }
+      m.appendReplacement(sb, replacementText);
+    }
+
+    m.appendTail(sb);
+    System.out.println("Old  Text: " + text);
+    System.out.println("New Text: " + sb.toString());
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+![](http://www.java2s.com/Tutorials/JavaImage/myResult/E/EXAMPLE__1D2D2231447902BB9D5C.PNG)
