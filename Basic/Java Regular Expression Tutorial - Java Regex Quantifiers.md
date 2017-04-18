@@ -353,3 +353,146 @@ Quantifiers and their meanings are listed in the following Table.
 QuantifiersMeaning*Zero or more times+One or more times?Once or not at all{m}Exactly m times{m,}At least m times{m, n}At least m, but not more than n times
 
 The quantifiers must follow a character or character class.
+
+
+
+## Example 2
+
+`*` matches zero or more `d`.
+
+<pre>import java.util.regex.Pattern;
+//  w  ww .  j  a v a  2 s . c  om
+public class Main {
+  public static void main(String args[]) {
+
+    String regex = "ad*";
+    String input = "add";
+
+    boolean isMatch = Pattern.matches(regex, input);
+    System.out.println(isMatch);
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+## Example 2
+
+`*` matches zero or more `d`.
+
+<pre>import java.util.regex.Pattern;
+//  w  ww .  j  a v a  2 s . c  om
+public class Main {
+  public static void main(String args[]) {
+
+    String regex = "ad*";
+    String input = "add";
+
+    boolean isMatch = Pattern.matches(regex, input);
+    System.out.println(isMatch);
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+## Example
+
+The following code demonstrates how to match a word boundary using a regular expression.
+
+<pre>//from  w w  w. j a v a 2 s  .  c  om
+public class Main {
+  public static void main(String[] args) {
+    // \\b to get \b inside the string literal.
+    String regex = "\\bJava\\b";
+    String replacementStr = "XML";
+    String inputStr = "Java and Javascript";
+    String newStr = inputStr.replaceAll(regex, replacementStr);
+
+    System.out.println("Regular  Expression: " + regex);
+    System.out.println("Input String: " + inputStr);
+    System.out.println("Replacement String:  " + replacementStr);
+    System.out.println("New String:  " + newStr);
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+We can group multiple characters as a unit by parentheses. For example, `(ab)`.
+
+Each group in a regular expression has a group number, which starts at 1.
+
+Method `groupCount()` from `Matcher` class returns the number of groups in the pattern associated with the Matcher instance.
+
+The group 0 refers to the entire regular expression and is not reported by the groupCount() method.
+
+Each left parenthesis inside a regular expression marks the start of a new group.
+
+We can back reference group numbers in a regular expression.
+
+Suppose we want to match text that starts with "abc" followed by "xyz", which is followed by "abc".
+
+We can write a regular expression as "abcxyzabc".
+
+We can use the back reference to rewrite the regular expression as "(abc)xyz\1". `\1` refers to group 1, which is `(abc)`.
+
+`\2` to refer to group 2, `\3` to refer to group 3, and so on.
+
+The following code shows how to display formatted phone numbers. In the regular expression `\b(\d{3})(\d{3})(\d{4})\b`, `\b` denotes that we are interested in matching ten digits only at word boundaries.
+
+<pre>import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+// w ww.ja  v a2s  .  co m
+public class Main {
+  public static void main(String[] args) {
+    String regex = "\\b(\\d{3})(\\d{3})(\\d{4})\\b";
+
+    Pattern p = Pattern.compile(regex);
+    String source = "1234567890, 12345,  and  9876543210";
+
+    Matcher m = p.matcher(source);
+
+    while (m.find()) {
+      System.out.println("Phone: " + m.group() + ", Formatted Phone:  ("
+          + m.group(1) + ") " + m.group(2) + "-" + m.group(3));
+    }
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+![](http://www.java2s.com/Tutorials/JavaImage/myResult/D/DESCRIPTION__1E92DF93EE0765AD496B.PNG)
+
+## Example
+
+The following code shows how to reference groups in a replacement text.
+
+`$n`, where `n` is a group number, inside a replacement text refers to the matched text for group `n`.
+
+For example, `$1` refers to the first matched group. To reformat phone numbers, we would use `($1) $2-$3`.
+
+<pre>import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+/*ww  w .j a  v  a 2  s  . co m*/
+public class Main {
+  public static void main(String[] args) {
+    String regex = "\\b(\\d{3})(\\d{3})(\\d{4})\\b";
+    String replacementText = "($1) $2-$3";
+    String source = "1234567890, 12345, and 9876543210";
+
+    Pattern p = Pattern.compile(regex);
+    Matcher m = p.matcher(source);
+
+    String formattedSource = m.replaceAll(replacementText);
+
+    System.out.println("Text: " + source);
+    System.out.println("Formatted Text: " + formattedSource);
+  }
+}
+</pre>
+
+The code above generates the following result.
+
+![](http://www.java2s.com/Tutorials/JavaImage/myResult/E/EXAMPLE__FBD771E58912055F17C4.PNG)
