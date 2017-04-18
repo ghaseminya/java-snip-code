@@ -520,3 +520,7 @@ a = (int[])resizeArray(a,5);
 a[3] = 4;  
 a[4] = 5;  
 for (int i=0; i
+
+
+
+from : [http://viralpatel.net/blogs/20-useful-java-code-snippets-for-java-developers/](http://viralpatel.net/blogs/20-useful-java-code-snippets-for-java-developers/)
